@@ -22,9 +22,10 @@ import (
 )
 
 var (
-	dpi       = float64(72)
-	fontBytes []byte
-	font      *truetype.Font
+	dpi            = float64(72)
+	fontBytes      []byte
+	font           *truetype.Font
+	nameSplitRegex = regexp.MustCompile(`\s|\+|\-`)
 )
 
 func generateImage(text string, size int, hue float64) (*bytes.Buffer, error) {
@@ -75,16 +76,14 @@ func parseParams(name string, size string) (string, int, float64) {
 	sizeInt = int(math.Min(float64(sizeInt), 1024))
 	hue := hash(name) % 360
 	name = strings.ToUpper(name)
-	matched, _ := regexp.MatchString(`^\p{Han}`, name)
 
-	var letters string
-	if matched {
-		letters = string([]rune(name)[0:1])
-	} else {
-		letters = name[0:2]
+	var letters []rune
+
+	tuples := nameSplitRegex.Split(name, 2)
+	for _, tuple := range tuples {
+		letters = append(letters, []rune(tuple)[0])
 	}
-
-	return letters, sizeInt, float64(hue)
+	return string(letters), sizeInt, float64(hue)
 }
 
 func init() {
@@ -99,7 +98,9 @@ func init() {
 }
 func main() {
 	port := os.Getenv("PORT")
-
+	if port == "" {
+		port = "8080"
+	}
 	router := gin.Default()
 	router.GET("/image", func(ctx *gin.Context) {
 		name := ctx.DefaultQuery("name", "IA")
