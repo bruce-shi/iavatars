@@ -108,7 +108,7 @@ func main() {
 		letters, size, hue := parseParams(name, sizeStr)
 		buffer, _ := generateImage(letters, size, hue)
 		extraHeaders := map[string]string{
-			"Content-Disposition": `inline; filename="avatar.png"`,
+			"Cache-Control": "public",
 		}
 		ctx.DataFromReader(200, int64(buffer.Len()), "image/png", buffer, extraHeaders)
 
