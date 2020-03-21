@@ -15,6 +15,7 @@ import (
 	"image/png"
 	"io/ioutil"
 	"math"
+	"os"
 	"regexp"
 	"strconv"
 	"strings"
@@ -97,6 +98,8 @@ func init() {
 
 }
 func main() {
+	port := os.Getenv("PORT")
+
 	router := gin.Default()
 	router.GET("/image", func(ctx *gin.Context) {
 		name := ctx.DefaultQuery("name", "IA")
@@ -109,5 +112,5 @@ func main() {
 		ctx.DataFromReader(200, int64(buffer.Len()), "image/png", buffer, extraHeaders)
 
 	})
-	router.Run(":8080")
+	router.Run(":" + port)
 }
