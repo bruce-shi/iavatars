@@ -114,7 +114,7 @@ func main() {
 
 	})
 	router.GET("/health", func(context *gin.Context) {
-		context.String(200, "text", "OK")
+		context.String(200, "%s", "OK")
 	})
 	router.Run(":" + port)
 }
