@@ -1,0 +1,90 @@
+<!doctype html>
+<html class="no-js" lang="">
+
+<head>
+	<meta charset="utf-8">
+	<title>I Avatars, Dummy Avatar/Logo Generator</title>
+
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+	<link rel="stylesheet" href="css/normalize.css">
+	<link rel="stylesheet" href="css/main.css">
+
+</head>
+
+<body>
+<!--[if IE]>
+<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade
+	your browser</a> to improve your experience and security.</p>
+<![endif]-->
+
+<main>
+	<h1>
+		I Avatars
+	</h1>
+	<h2>generate avatars using name initials</h2>
+	<artitle>
+		<h2>Usages: </h2>
+		<div class="details">
+			<h3>Use with default setting</h3>
+			<code>
+				GET <a href="https://iavatar.cc/image/?name=I+Avatar">https://iavatar.cc/image/?name=I+Avatar</a>
+			</code>
+			<div class="image">
+				<img src="https://iavatar.cc/image/?name=I+Avatar" alt="iavatars" width="100" height="100">
+			</div>
+			<h3>Params</h3>
+			<div class="details">
+				<h4>Image Size(size)</h4>
+				<p>size is the size of generated images in pixel, max size is 1024</p>
+				<code>
+					GET <a href="https://iavatar.cc/image/?name=秦始皇&size=200">https://iavatar.cc/image/?name=秦始皇&size=200</a>
+				</code>
+				<div class="image">
+					<img src="https://iavatar.cc/image/?name=秦始皇&size=200" alt="iavatars" width="200" height="200">
+				</div>
+
+				<h4>name</h4>
+				<p>name used to generate initials, split by space or + , max number of initials is 2</p>
+				<code>
+					GET <a href="https://iavatar.cc/image/?name=Very+Long+Name&size=100">https://iavatar.cc/image/?name=Very+Long+Name&size=100</a>
+				</code>
+				<div class="image">
+					<img src="https://iavatar.cc/image/?name=Very+Long+Name&size=100" alt="iavatars" width="100"
+						 height="100">
+				</div>
+
+				<h4>color</h4>
+				<p>color will be calculated automatically by names </p>
+				<code>
+					GET <a href="https://iavatar.cc/image/?name=Different+Name&size=100">https://iavatar.cc/image/?name=Different+Name&size=100</a>
+				</code>
+				<div class="image">
+					<img src="https://iavatar.cc/image/?name=Different+Name&size=100" alt="iavatars" width="100"
+						 height="100">
+				</div>
+			</div>
+
+		</div>
+
+	</artitle>
+
+</main>
+
+<!-- Google Analytics: change UA-XXXXX-Y to be your site's ID. -->
+<script>
+    window.ga = function () {
+        ga.q.push(arguments)
+    };
+    ga.q = [];
+    ga.l = +new Date;
+    ga('create', 'UA-161447751-1', 'auto');
+    ga('set', 'transport', 'beacon');
+    ga('send', 'pageview')
+</script>
+<script src="https://www.google-analytics.com/analytics.js" async></script>
+</body>
+
+</html>

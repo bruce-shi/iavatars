@@ -87,8 +87,7 @@ func parseParams(name string, size string) (string, int, float64) {
 }
 
 func init() {
-
-	f, err := static.LocalFile("./ttf", true).Open("WenQuanYi-Zen-Hei.ttf")
+	f, err := static.LocalFile("./ttf", false).Open("WenQuanYi-Zen-Hei.ttf")
 	if err != nil {
 		panic(err)
 	}
@@ -102,6 +101,7 @@ func main() {
 		port = "8080"
 	}
 	router := gin.Default()
+	router.Use(static.Serve("/", static.LocalFile("./statics", true)))
 	router.GET("/image", func(ctx *gin.Context) {
 		name := ctx.DefaultQuery("name", "IA")
 		sizeStr := ctx.DefaultQuery("size", "150")
@@ -112,6 +112,9 @@ func main() {
 		}
 		ctx.DataFromReader(200, int64(buffer.Len()), "image/png", buffer, extraHeaders)
 
+	})
+	router.GET("/health", func(context *gin.Context) {
+		context.String(200, "text", "OK")
 	})
 	router.Run(":" + port)
 }
