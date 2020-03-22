@@ -25,7 +25,8 @@ var (
 	dpi            = float64(72)
 	fontBytes      []byte
 	font           *truetype.Font
-	nameSplitRegex = regexp.MustCompile(`\s|\+|\-`)
+	nameSplitRegex = regexp.MustCompile(`\s|\+|-`)
+	hash32a        = fnv.New32a()
 )
 
 func generateImage(text string, size int, hue float64) (*bytes.Buffer, error) {
@@ -59,12 +60,12 @@ func generateImage(text string, size int, hue float64) (*bytes.Buffer, error) {
 }
 
 func hash(s string) uint32 {
-	h := fnv.New32a()
-	_, err := h.Write([]byte(s))
+	hash32a.Reset()
+	_, err := hash32a.Write([]byte(s))
 	if err != nil {
 		return 80
 	} else {
-		return h.Sum32()
+		return hash32a.Sum32()
 	}
 }
 
@@ -77,7 +78,7 @@ func parseParams(name string, size string) (string, int, float64) {
 	hue := hash(name) % 360
 	name = strings.ToUpper(name)
 
-	var letters []rune
+	var letters = make([]rune, 0, 2)
 
 	tuples := nameSplitRegex.Split(name, 2)
 	for _, tuple := range tuples {
@@ -88,12 +89,12 @@ func parseParams(name string, size string) (string, int, float64) {
 
 func init() {
 	f, err := static.LocalFile("./ttf", false).Open("WenQuanYi-Zen-Hei.ttf")
+	defer f.Close()
 	if err != nil {
 		panic(err)
 	}
 	fontBytes, _ = ioutil.ReadAll(f)
 	font, _ = truetype.Parse(fontBytes)
-
 }
 func main() {
 	port := os.Getenv("PORT")
@@ -116,5 +117,8 @@ func main() {
 	router.GET("/health", func(context *gin.Context) {
 		context.String(200, "%s", "OK")
 	})
-	router.Run(":" + port)
+	err := router.Run(":" + port)
+	if err != nil {
+		panic(err)
+	}
 }
