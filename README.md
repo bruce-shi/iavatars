@@ -1,4 +1,4 @@
-#I Avatars
+# I Avatars
 generate avatars using name initials
 
 https://iavatar.cc
@@ -16,7 +16,7 @@ GET  https://iavatar.cc/image/?name=I+Avatar
 ![default](https://iavatar.cc/image/?name=I+Avatar "Default")
 
 
-###Params
+### Params
 
 #### size
 
