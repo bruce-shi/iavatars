@@ -102,6 +102,7 @@ func main() {
 		port = "8080"
 	}
 	router := gin.Default()
+	router.Use(gin.Recovery())
 	router.Use(static.Serve("/", static.LocalFile("./statics", true)))
 	router.GET("/image", func(ctx *gin.Context) {
 		name := ctx.DefaultQuery("name", "IA")
